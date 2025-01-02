@@ -1,0 +1,32 @@
+{
+  "schemaVersion": 1,
+  "id": "sgadmin",
+  "version": "${version}",
+  "name": "SGAdminUI",
+  "description": "",
+  "authors": [],
+  "contact": {},
+  "license": "All-Rights-Reserved",
+  "icon": "assets/sgadminui/icon.png",
+  "environment": "client",
+  "entrypoints": {
+    "client": [
+      "io.github.singlerr.sgadminui.client.SGAdminUIClient"
+    ],
+    "main": [
+      "io.github.singlerr.sgadminui.SGAdminUI"
+    ]
+  },
+  "mixins": [
+    "sgadminui.mixins.json",
+    {
+      "config": "sgadminui.client.mixins.json",
+      "environment": "client"
+    }
+  ],
+  "depends": {
+    "fabricloader": ">=${loader_version}",
+    "fabric": "*",
+    "minecraft": "${minecraft_version}"
+  }
+}
