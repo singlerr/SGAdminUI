@@ -11,17 +11,18 @@ public final class GameHistory {
   private int playerCount;
   private int survivorsCount;
 
-  public GameHistory(String id){
+  public GameHistory(String id) {
     this(id, 0, 0);
   }
 
-  public GameHistory(String id, int playerCount){
+  public GameHistory(String id, int playerCount) {
     this(id, playerCount, playerCount);
   }
 
-  public void recordPlayerQuit(){
-    if(survivorsCount == 0)
+  public void recordPlayerQuit() {
+    if (survivorsCount == 0) {
       return;
+    }
 
     survivorsCount--;
   }

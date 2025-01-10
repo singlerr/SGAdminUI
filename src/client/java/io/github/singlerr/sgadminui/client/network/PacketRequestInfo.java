@@ -10,9 +10,10 @@ import net.minecraft.resources.ResourceLocation;
 @NoArgsConstructor
 public final class PacketRequestInfo implements FabricPacket {
 
-  public static final PacketType<PacketRequestInfo> TYPE = PacketType.create(new ResourceLocation("sgadmin", "request_info"), PacketRequestInfo::new);
+  public static final PacketType<PacketRequestInfo> TYPE =
+      PacketType.create(new ResourceLocation("sgadmin", "request_info"), PacketRequestInfo::new);
 
-  public PacketRequestInfo(FriendlyByteBuf buf){
+  public PacketRequestInfo(FriendlyByteBuf buf) {
     readPayload(buf);
   }
 

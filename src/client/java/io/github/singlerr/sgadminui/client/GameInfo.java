@@ -15,37 +15,42 @@ public final class GameInfo {
 
   @Data
   @NoArgsConstructor
-  public static class Builder{
+  public static class Builder {
 
     private PlayerList playerList;
     private Game game;
 
-    public boolean setPlayerList(PlayerList list){
+    public boolean setPlayerList(PlayerList list) {
       this.playerList = list;
       return game != null && playerList != null;
     }
 
-    public boolean setGame(Game game){
+    public boolean setGame(Game game) {
       this.game = game;
       return game != null && playerList != null;
     }
 
-    public GameInfo build(){
-      return new GameInfo(game, playerList);
+    public GameInfo build() {
+
+      GameInfo i = new GameInfo(game, playerList);
+      game = null;
+      playerList = null;
+      return i;
     }
   }
 
   @Data
   @AllArgsConstructor
-  public static class PlayerList{
+  public static class PlayerList {
     private String id;
     private List<GamePlayer> playerList;
   }
 
   @Data
   @AllArgsConstructor
-  public static class Game{
+  public static class Game {
     private String currentGameId;
+    private GameHistory currentGame;
     private List<GameHistory> games;
   }
 }
