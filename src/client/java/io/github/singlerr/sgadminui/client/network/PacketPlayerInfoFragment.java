@@ -1,7 +1,5 @@
 package io.github.singlerr.sgadminui.client.network;
 
-import icyllis.modernui.graphics.text.FontCollection;
-import icyllis.modernui.graphics.text.FontPaint;
 import io.github.singlerr.sgadminui.client.GamePlayer;
 import java.util.ArrayList;
 import java.util.List;

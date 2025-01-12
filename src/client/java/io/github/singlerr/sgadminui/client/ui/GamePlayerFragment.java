@@ -14,7 +14,9 @@ import icyllis.modernui.core.Context;
 import icyllis.modernui.core.Core;
 import icyllis.modernui.fragment.Fragment;
 import icyllis.modernui.graphics.BlendMode;
+import icyllis.modernui.graphics.Image;
 import icyllis.modernui.graphics.MathUtil;
+import icyllis.modernui.graphics.drawable.ImageDrawable;
 import icyllis.modernui.mc.ModernUIClient;
 import icyllis.modernui.mc.MuiModApi;
 import icyllis.modernui.mc.UIManager;
@@ -33,6 +35,7 @@ import icyllis.modernui.view.View;
 import icyllis.modernui.view.ViewGroup;
 import icyllis.modernui.widget.EditText;
 import icyllis.modernui.widget.FrameLayout;
+import icyllis.modernui.widget.ImageView;
 import icyllis.modernui.widget.LinearLayout;
 import icyllis.modernui.widget.PagerAdapter;
 import icyllis.modernui.widget.ScrollView;
@@ -47,12 +50,17 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Consumer;
 import java.util.function.Supplier;
+import lombok.extern.slf4j.Slf4j;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.resources.language.I18n;
 
+@Slf4j
 public final class GamePlayerFragment extends Fragment {
 
   private GameInfo info;
+
+  private Image adminHeadImage;
+  private Image playerHeadImage;
 
   @NonNull
   public static LinearLayout createCategoryList(Context context,
@@ -333,6 +341,9 @@ public final class GamePlayerFragment extends Fragment {
   @Override
   public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                            @Nullable DataSet savedInstanceState) {
+    adminHeadImage = Image.create("sgadminui", "admin.png");
+    playerHeadImage = Image.create("sgadminui", "player.png");
+
     var args = getArguments();
     info = (GameInfo) args.get("gameInfo");
     var pager = new ViewPager(getContext());
@@ -372,6 +383,12 @@ public final class GamePlayerFragment extends Fragment {
           .filter(p -> p.getRole().equalsIgnoreCase("admin")).toList();
 
       for (GamePlayer admin : admins) {
+        var playerInfoWithHead = new LinearLayout(context);
+        playerInfoWithHead.setOrientation(LinearLayout.HORIZONTAL);
+        var playerInfoWithHeadTransition = new LayoutTransition();
+        playerInfoWithHeadTransition.enableTransitionType(LayoutTransition.CHANGING);
+        playerInfoWithHead.setLayoutTransition(playerInfoWithHeadTransition);
+
         var playerInfo = new LinearLayout(context);
         playerInfo.setOrientation(LinearLayout.VERTICAL);
         var playerInfoTransition = new LayoutTransition();
@@ -381,6 +398,16 @@ public final class GamePlayerFragment extends Fragment {
         var params = new LinearLayout.LayoutParams(MATCH_PARENT, WRAP_CONTENT);
         params.setMarginsRelative(content.dp(3), content.dp(5), content.dp(3), content.dp(0));
 
+        var headImage = new ImageView(getContext());
+        headImage.setImageDrawable(new ImageDrawable(adminHeadImage));
+        headImage.setScaleType(ImageView.ScaleType.CENTER);
+
+        headImage.setMinimumHeight(playerInfoWithHead.dp(1f));
+        headImage.setMinimumWidth(playerInfoWithHead.dp(1f));
+        headImage.setMaxHeight(playerInfoWithHead.dp(30f));
+        headImage.setMaxWidth(playerInfoWithHead.dp(30f));
+        headImage.setAdjustViewBounds(true);
+
         var playerName = new TextView(getContext());
         playerName.setText(admin.getDisplayName());
         playerName.setTextAlignment(View.TEXT_ALIGNMENT_VIEW_START);
@@ -388,6 +415,16 @@ public final class GamePlayerFragment extends Fragment {
         playerName.setTypeface(SGAdminUIClient.NANUM_FONT);
 
         playerInfo.addView(playerName, params);
+
+        var imageParams = new LinearLayout.LayoutParams(WRAP_CONTENT, WRAP_CONTENT);
+        params.gravity = Gravity.CENTER;
+        params.setMarginStart(content.dp(8));
+
+
+        playerInfoWithHead.addView(headImage, imageParams);
+        playerInfoWithHead.addView(playerInfo);
+
+        playerListLayout.addView(playerInfoWithHead);
       }
 
       scrollView.addView(playerListLayout);
@@ -404,6 +441,7 @@ public final class GamePlayerFragment extends Fragment {
       var playerListLayoutTransition = new LayoutTransition();
       playerListLayoutTransition.enableTransitionType(LayoutTransition.CHANGING);
       playerListLayout.setLayoutTransition(playerListLayoutTransition);
+
 
       List<GamePlayer> players = info.getPlayerList().getPlayerList().stream()
           .filter(p -> !p.getRole().equalsIgnoreCase("admin")).toList();

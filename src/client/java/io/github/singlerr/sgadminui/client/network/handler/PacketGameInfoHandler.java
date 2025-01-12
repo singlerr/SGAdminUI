@@ -14,6 +14,7 @@ public final class PacketGameInfoHandler
                       PacketSender packetSender) {
     GameInfo.Builder builder = SGAdminUIClient.beginOrGet();
     builder.setGame(
-        new GameInfo.Game(packetGameInfo.getCurrentGameId(),packetGameInfo.getCurrentGameInfo(), packetGameInfo.getGames()));
+        new GameInfo.Game(packetGameInfo.getCurrentGameId(), packetGameInfo.getCurrentGameInfo(),
+            packetGameInfo.getGames()));
   }
 }

@@ -1,9 +1,7 @@
 package io.github.singlerr.sgadminui.client;
 
 import com.mojang.blaze3d.platform.InputConstants;
-import icyllis.modernui.graphics.text.FontCollection;
 import icyllis.modernui.graphics.text.FontFamily;
-import icyllis.modernui.graphics.text.FontPaint;
 import icyllis.modernui.text.Typeface;
 import io.github.singlerr.sgadminui.client.network.PacketGameInfo;
 import io.github.singlerr.sgadminui.client.network.PacketPlayerInfoFragment;
@@ -19,7 +17,6 @@ import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking;
 import net.fabricmc.fabric.api.resource.SimpleSynchronousResourceReloadListener;
 import net.fabricmc.fabric.impl.resource.loader.ResourceManagerHelperImpl;
 import net.minecraft.client.KeyMapping;
-import net.minecraft.client.Minecraft;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.packs.PackType;
 import net.minecraft.server.packs.resources.ResourceManager;

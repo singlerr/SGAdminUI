@@ -33,8 +33,9 @@ public final class PacketBuilder {
     if (packet.getPacketId() != id) {
       return false;
     }
-    if(states.length == 0)
+    if (states.length == 0) {
       return true;
+    }
     if (packet.getPacketIndex() >= states.length) {
       return false;
     }
